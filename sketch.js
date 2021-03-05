@@ -42,7 +42,7 @@ const harma = 0.05;
 const potential_double_well = x => 2E+4*Math.pow((4*x - 1)*(4*x - 3),2)
 const potential_harmonic = x => 0.5*(1/(Math.pow(harma,2)))*Math.pow(x-0.5,2)
 const potential_inf_square_well = x => 0.0;
-let potential_step = x => ((x > 0.5) ? potential_height : 0.0);
+let potential_step = x => 2E+5*((x > 0.5) ? potential_height : 0.0);
 
 const psi_harmonic_gs = x => Math.exp(-(1/(2*Math.pow(harma,2)))*Math.pow(x - 0.5,2));
 const psi_harmonic_ex = x => (x-0.5)*Math.exp(-(1/(2*Math.pow(harma,2)))*Math.pow(x - 0.5,2));
@@ -184,7 +184,7 @@ function potentialSelectEvent() {
 		case 'step':
 			settings.label = 'Step Potential';
 			settings.dataFile = 'step';
-			potential_step = x => ((x > 0.5) ? potential_height : 0.0);
+			potential_step = x => 2E+5*((x > 0.5) ? potential_height : 0.0);
 			potential_func = potential_step;
 			break;
 		case 'custom':
