@@ -85,6 +85,8 @@ Image and data files are automatically saved to the local download directory.
 *************************************************************************************************************/
 
 function Schroedinger(settings){
+	this.velocity      = settings.velocity;
+	this.gaussian      = settings.gaussian;
 	this.size          = settings.size;
 	this.median        = settings.median;
 	this.energy        = settings.energy;
@@ -142,6 +144,10 @@ function Schroedinger(settings){
 		let phase  = 0;
 		for(let i = startIndex; (i > 0) && (i < this.size - 1); i += sign){
 			let envelope      = this.psi(this.xStep*i);
+			if (this.gaussian) {
+				let velocity    = new Complex(Math.cos(this.velocity*this.xStep*i), Math.sin(this.velocity*this.xStep*i));
+				envelope        = velocity.mul(envelope)
+			}
 			let phaseFactor   = new Complex(Math.cos(phase), Math.sin(phase));
 			this.psiX[i]      = phaseFactor.mul(envelope);
 			this.rhoX[i]      = this.psiX[i].sqr();
