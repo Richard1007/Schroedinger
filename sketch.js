@@ -119,7 +119,7 @@ function setup() {
 	input_psi = createInput('x => 2E+4*Math.pow((4*x - 1)*(4*x - 3),2)');
 	input_psi.attribute('disabled', '');
 	input_psi.parent('container_psi_parameters_customized');
-	settings.energy = 100*slider_velocity.value()/255;
+	settings.energy = 10000*slider_velocity.value()/255;
 	reset_button = createButton('Reset');
 	reset_button.parent('container_reset')
 	reset_button.mousePressed(resetSketch);
@@ -136,7 +136,7 @@ function setup() {
 function resetSketch() {
 	potentialSelectEvent();
 	psiSelectEvent();
-	settings.energy = 100*slider_velocity.value()/255;
+	settings.energy = 10000*slider_velocity.value()/255;
 	settings.potential = potential_func;
 	settings.psi = psi_func;
 	quantumParticle = new Schroedinger(settings);
@@ -178,7 +178,7 @@ function potentialSelectEvent() {
 		case 'barrier':
 			settings.label = 'Barrier';
 			settings.dataFile = 'barrier';
-			const potential_barrier = x => ((x > 0.5+potential_barrier_width || x < 0.5-potential_barrier_width) ? 0.0 : potential_height);
+			const potential_barrier = x => 2E+5*((x > 0.5+potential_barrier_width || x < 0.5-potential_barrier_width) ? 0.0 : potential_height);
 			potential_func = potential_barrier;
 			break;
 		case 'step':
@@ -244,7 +244,7 @@ function psiSelectEvent() {
 		slider_velocity.removeAttribute('disabled');
 		slider_variance.removeAttribute('disabled');
 		psi_position = slider_position.value()/255;
-		settings.energy = 100*slider_velocity.value()/255;
+		settings.energy = 10000*slider_velocity.value()/255;
 		psi_variance = slider_variance.value()/2550;
 		input_psi.attribute('disabled', '');
 	} else if (val == 'custom') {
@@ -265,7 +265,7 @@ function psiSelectEvent() {
 function sliderUpdateEvent() {
 	potential_height = slider_height.value()/255;
 	psi_position = slider_position.value()/255;
-	psi_velocity = 100*slider_velocity.value()/255;
+	psi_velocity = 10000*slider_velocity.value()/255;
 	psi_variance = slider_variance.value()/2550;
 	document.getElementById('value_height').innerHTML = Math.round(potential_height * 100) / 100;
 	document.getElementById('value_position').innerHTML = Math.round(psi_position * 100) / 100;
