@@ -7,10 +7,55 @@
 		<script src="fourier.js"></script>
 		<script src="schroedinger.js"></script>
 		<script src="sketch.js"></script>
-
 		<title>Schroedinger Equation</title>
 		<meta charset="utf-8">
+		<style>
+			.field {
+				width: 900px;
+			}
+		</style>
 	</head>
 	<body>
+		<div id='container'></div>
+		<div id='gui'>
+			<fieldset class='field'>
+				<legend>Potential:</legend>
+				<div id='container_potentials'></div>
+			</fieldset>
+			<fieldset class='field'>
+				<legend>Potential parameters:</legend>
+				<div id='container_potential_parameters_height'><label>Potential height:</label></div><div id='value_height'></div>
+				<div id='container_potential_parameters_customized'><label>Custom potential function:</label></div>
+			</fieldset>
+			<fieldset class='field'>
+				<legend>Initial state:</legend>
+				<div id='container_psi'></div>
+			</fieldset>
+			<fieldset class='field'>
+				<legend>Initial state parameters:</legend>
+				<div id='container_psi_parameters_n'><label>Level n:</label></div>
+				<div id='container_psi_parameters_position'><label>Position:</label></div><div id='value_position'></div>
+				<div id='container_psi_parameters_velocity'><label>Velocity:</label></div><div id='value_velocity'></div>
+				<div id='container_psi_parameters_variance'><label>Variance:</label></div><div id='value_variance'></div>
+				<div id='container_psi_parameters_customized'><label>Custom potential function:</label></div>
+			</fieldset>
+			<fieldset class='field'>
+				<legend>Control:</legend>
+				<div id="container_reset"></div>
+				<div id="container_run_pause"></div>
+				<div id="container_download"></div>
+			</fieldset>
+		</div>
+		<p>Original version implemented by CodingPhysics. Adapted by Marek Narożniak and Professor Tim Byrnes.</p>
+		<dl>
+			<dt>CodingPhysics</dt>
+			<dd>The author of the original implementation of the above simulation. Visit the GitHub profile under <a href="https://github.com/CodingPhysics">github.com/CodingPhysics</a></dd>
+
+			<dt>Tim Byrnes</dt>
+			<dd>Professor at New York University Shanghai. Visit <a href="https://nyu.timbyrnes.net/">nyu.timbyrnes.net</a> to know more!</dd>
+
+			<dt>Marek Narożniak</dt>
+			<dd>PhD Student at Tim Byrnes research group. Visit the <a href="https://mareknarozniak.com/">mareknarozniak.com</a> to know of other Marek's projects!</dd>
+	</dl>
 	</body>
 </html>

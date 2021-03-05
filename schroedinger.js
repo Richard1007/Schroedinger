@@ -32,7 +32,7 @@ The continuous wave function is represented by an array of length N:
 with Ψ[0] = Ψ[N-1] = 0 for fixed boundary conditions.
 The spatial derivative in the Hamilton operator is approximated by
 
-	d^2Ψ/dx^2 (x) ≈ (Ψ[j - 1] - 2 Ψ[j] + Ψ[j])/ Δx^2
+	d^2Ψ/dx^2 (x) ≈ (Ψ[j - 1] - 2 Ψ[j] + Ψ[j+1])/ Δx^2
 
 Therefore, equation (*) can be rewritten as a martix equation for the vectors Ψ' = Ψ(t + Δt) and Ψ = Ψ(t):
 
@@ -58,9 +58,8 @@ Schroedinger is called with a settings object as a single argument, that summari
 
 var mySettings = {
 	potential:     <Function>,     // potential energy V(x)
-	energy:        <Number>,       // energy E of the initial wave packet (E = k^2/2)
-	median:        <Number>,       // center of the initial wave packet within the interval (0,1)
-	sigma:         <Number>,       // width of the initial wave packet
+	energy:        <Number>,       // energy E of the initial wave function
+	psi:           <Function>,     // initial wave function
 	size:          <Number>        // size N of the wave function array
 	timeStep:      <Number>,       // time step Δt of the simulation
 	stepsPerFrame: <Number>,       // number of interation steps per frame
@@ -86,11 +85,12 @@ Image and data files are automatically saved to the local download directory.
 *************************************************************************************************************/
 
 function Schroedinger(settings){
-
+	this.gaussian      = settings.gaussian;
+	this.velocity      = settings.velocity;
 	this.size          = settings.size;
-	this.energy        = settings.energy;
 	this.median        = settings.median;
-	this.sigma         = settings.sigma;
+	this.energy        = settings.energy;
+	this.psi           = settings.psi;
 	this.timeStep      = settings.timeStep;
 	this.stepsPerFrame = settings.stepsPerFrame;
 	this.maxFrames     = settings.maxFrames;
@@ -142,17 +142,18 @@ function Schroedinger(settings){
 
 	this.computePsiAndV = function(startIndex, sign){
 		let phase  = 0;
-		let decay  = 0;
-
 		for(let i = startIndex; (i > 0) && (i < this.size - 1); i += sign){
-			let envelope      = Math.exp(-Math.pow((this.xStep*i - this.median)/(2*this.sigma), 2) - decay);
+			let envelope      = this.psi(this.xStep*i);
+			if (this.gaussian) {
+				let velocity    = new Complex(this.velocity*Math.cos(this.xStep*i), this.velocity*Math.sin(this.xStep*i));
+				envelope        = velocity.mul(envelope)
+			}
 			let phaseFactor   = new Complex(Math.cos(phase), Math.sin(phase));
 			this.psiX[i]      = phaseFactor.mul(envelope);
 			this.rhoX[i]      = this.psiX[i].sqr();
 			this.potEnergy[i] = this.potential(this.xStep*i);
 			let increment     = sign*Math.sqrt(2*Math.abs(this.energy - this.potEnergy[i]))*this.xStep;
 			phase            += (this.potEnergy[i] < this.energy)? increment : 0;
-			decay            += (this.potEnergy[i] < this.energy)? 0 : increment;
 			this.maxPot       = Math.max(this.maxPot, this.potEnergy[i]);
 			this.minPot       = Math.min(this.minPot, this.potEnergy[i]);
 		}
@@ -274,10 +275,12 @@ function Schroedinger(settings){
 			console.log(property + ': ' + this.statistics[property].toExponential(6));
 		}
 
+		/*
 		if(this.frameCount === this.maxFrames && this.dataFile !== null){
 			saveTable(this.dataTable, this.dataFile + 'Statictics.csv');
 			console.log('-> Statictics data saved as ' + this.dataFile + 'Statictics.csv');
 		}
+		*/
 	}
 
 	/*************************************************************************************************/
@@ -310,6 +313,7 @@ function Schroedinger(settings){
 			let maxWaveVector          = Math.PI/this.xStep;
 			let delta                  = 0.5*width*maxPotEnergyWaveVector/maxWaveVector*this.momentumZoom;
 
+			this.underlay.clear();
 			this.underlay.stroke(235);
 			this.underlay.strokeWeight(3);
 			this.underlay.line(0,seperatorHeight,width,seperatorHeight);
@@ -409,12 +413,6 @@ function Schroedinger(settings){
 
 		this.frameCount++;
 		this.statistics.time += this.stepsPerFrame*this.timeStep;
-		if(this.frameCount > this.maxFrames){
-			noLoop();
-			if(this.dataFile !== null){
-				this.saveAverageDensity();
-			}
-		}
 	}
 
 	/*************************************************************************************************/
