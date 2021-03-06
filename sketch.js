@@ -32,22 +32,22 @@ let potential_func = null;
 
 let psi_func = null;
 
-let psi_position = 0;
-let psi_velocity = 1;
-let psi_variance = 1;
+let psi_position;
+let psi_velocity;
+let psi_variance;
 let psi_n = 0;
 
 const harma = 0.05;
 
 const potential_double_well = x => 2E+4*Math.pow((4*x - 1)*(4*x - 3),2)
-const potential_harmonic = x => 0.5*(1/(Math.pow(harma,2)))*Math.pow(x-0.5,2)
+const potential_harmonic = x => 5000.0*Math.pow(2*x-1.0,2)
 const potential_inf_square_well = x => 0.0;
 let potential_step = x => 2E+5*((x > 0.5) ? potential_height : 0.0);
 
-const psi_harmonic_gs = x => Math.exp(-(1/(2*Math.pow(harma,2)))*Math.pow(x - 0.5,2));
-const psi_harmonic_ex = x => (x-0.5)*Math.exp(-(1/(2*Math.pow(harma,2)))*Math.pow(x - 0.5,2));
+const gaussian_pulse = (x, position, variance) => Math.exp(-Math.pow((x - position)/(2*variance), 2));
+let psi_harmonic_gs;
+let psi_harmonic_ex;
 let psi_inf_well_n = x => Math.sin((psi_n+1)*Math.PI*x);
-let psi_gauss_pulse = x => Math.exp(-Math.pow((x - psi_position)/(2*psi_variance), 2));
 
 let radio_potential;
 let radio_psi;
@@ -74,7 +74,7 @@ function setup() {
 	cnvs.parent('container');
 	settings.underlay = createGraphics(CANVAS_WIDTH, CANVAS_HEIGHT);
 	// background(0);
-	input_potential = createInput('x => 2E+4*Math.pow((4*x - 1)*(4*x - 3),2)');
+	input_potential = createInput('Math.pow(2*x-1.0,2)');
 	input_potential.parent('container_potential_parameters_customized');
 	input_potential.attribute('disabled', '');
 	radio_potential = createRadio('potential');
@@ -106,7 +106,7 @@ function setup() {
 	slider_position.attribute('disabled', '');
 	slider_position.changed(sliderUpdateEvent);
 	slider_position.parent('container_psi_parameters_position');
-	slider_velocity = createSlider(0, 255, 0);
+	slider_velocity = createSlider(-127, 127, 0);
 	slider_velocity.attribute('disabled', '');
 	slider_velocity.changed(sliderUpdateEvent);
 	slider_velocity.parent('container_psi_parameters_velocity');
@@ -117,7 +117,7 @@ function setup() {
 	input_n = createInput('0');
 	input_n.attribute('disabled', '');
 	input_n.parent('container_psi_parameters_n');
-	input_psi = createInput('x => 2E+4*Math.pow((4*x - 1)*(4*x - 3),2)');
+	input_psi = createInput('Math.exp(-Math.pow((x-0.11)/(0.13), 2))');
 	input_psi.attribute('disabled', '');
 	input_psi.parent('container_psi_parameters_customized');
 	reset_button = createButton('Reset');
@@ -136,7 +136,7 @@ function setup() {
 function resetSketch() {
 	potentialSelectEvent();
 	psiSelectEvent();
-	settings.velocity = 1000*slider_velocity.value()/255;
+	settings.velocity = 300.0*slider_velocity.value()/127;
 	settings.potential = potential_func;
 	settings.psi = psi_func;
 	quantumParticle = new Schroedinger(settings);
@@ -190,7 +190,7 @@ function potentialSelectEvent() {
 		case 'custom':
 			settings.label = 'Custom Potential';
 			settings.dataFile = 'custom';
-			potential_func = eval(input_potential.value());
+			potential_func = x => eval(input_potential.value());
 			break;
 	}
 	// handle the UI
@@ -214,10 +214,15 @@ function psiSelectEvent() {
 	switch (val) {
 		case 'harmonic_ground':
 			settings.gaussian = false;
+			settings.velocity = 0.0;
+			psi_harmonic_gs = x => gaussian_pulse(x, 0.5, 0.05);
 			psi_func = psi_harmonic_gs;
 			break;
 		case 'harmonic_first':
 			settings.gaussian = false;
+			settings.velocity = 0.0;
+			psi_harmonic_gs = x => gaussian_pulse(x, 0.5, 0.05);
+			psi_harmonic_ex = x => 20.0*(x-0.5)*psi_harmonic_gs(x);
 			psi_func = psi_harmonic_ex;
 			break;
 		case 'inf_nth':
@@ -228,12 +233,12 @@ function psiSelectEvent() {
 		case 'gauss':
 			settings.gaussian = true;
 			settings.velocity = psi_velocity;
-			psi_gauss_pulse = x => Math.exp(-Math.pow((x - psi_position)/(2*psi_variance), 2));
+			psi_gauss_pulse = x => gaussian_pulse(x, psi_position, psi_variance);
 			psi_func = psi_gauss_pulse;
 			break;
 		case 'custom':
 			settings.gaussian = false;
-			psi_func = eval(input_psi.value());
+			psi_func = x => eval(input_psi.value());
 			break;
 	}
 	// handle the UI
@@ -249,7 +254,7 @@ function psiSelectEvent() {
 		slider_velocity.removeAttribute('disabled');
 		slider_variance.removeAttribute('disabled');
 		psi_position = slider_position.value()/255;
-		settings.velocity = 1000*slider_velocity.value()/255;
+		settings.velocity = 300.0*slider_velocity.value()/127;
 		psi_variance = slider_variance.value()/2550;
 		input_psi.attribute('disabled', '');
 	} else if (val == 'custom') {
@@ -270,7 +275,7 @@ function psiSelectEvent() {
 function sliderUpdateEvent() {
 	potential_height = slider_height.value()/255;
 	psi_position = slider_position.value()/255;
-	psi_velocity = 1000*slider_velocity.value()/255;
+	psi_velocity = 300.0*slider_velocity.value()/127;
 	psi_variance = slider_variance.value()/2550;
 	document.getElementById('value_height').innerHTML = Math.round(potential_height * 100) / 100;
 	document.getElementById('value_position').innerHTML = Math.round(psi_position * 100) / 100;
