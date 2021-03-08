@@ -28,8 +28,8 @@
 <h3> Introduction </h3>
 
 <p>
-The time dependent Schrodinger equation is perhaps the most fundamental equation in quantum mechanics.  This page is designed so that 
-you get a feel for how it works. 
+The time dependent Schrodinger equation is perhaps the most fundamental equation in quantum mechanics.  This page is designed so that
+you get a feel for how it works.
 </p>
 
 <p>
@@ -60,17 +60,17 @@ Here, the variables are:
 <p>
 What the Schrodinger equation does is to take the wavefunction  \( \psi(x) \) at some initial time (let's say \(t=0\) ) and
 evolve it forward in time.  By solving the Schrodinger equation, you are able to find what the wavefunction will be at some other time
-\( t \) later. 
+\( t \) later.
 </p>
 
 <p>
-The "inputs" of the Schrodinger function are the potential energy \( V(x) \), the mass of the particle \( m \), and the initial wavefunction 
-\( \psi(x) \).  From just this information, the Schrodinger equation can predict how the wavefunction will change over time.  
+The "inputs" of the Schrodinger function are the potential energy \( V(x) \), the mass of the particle \( m \), and the initial wavefunction
+\( \psi(x) \).  From just this information, the Schrodinger equation can predict how the wavefunction will change over time.
 </p>
 
 <p>
-Schrodinger equation is the most central equation of quantum mechanics and is used to understand any kind of time-dependent quantum phenomenon.  
-It's status in quantum physics is a lot like Newton's laws of motion for classical physics.  From this equation we can work out how things will behave over time. 
+Schrodinger equation is the most central equation of quantum mechanics and is used to understand any kind of time-dependent quantum phenomenon.
+It's status in quantum physics is a lot like Newton's laws of motion for classical physics.  From this equation we can work out how things will behave over time.
 </p>
 
 
@@ -132,40 +132,40 @@ The best way to understand this is to get your hands dirty and play with the equ
 <h3> The Schrodinger equation simulator </h3>
 
 <p>
-The above code does a numerical evolution of the time-dependent Schrodinger equation in one dimension.  
+The above code does a numerical evolution of the time-dependent Schrodinger equation in one dimension.
 </p>
 
 <p>
 There are various combinations of the potential \(V(x) \) and initial state \( \psi(x) \) that you can choose. After choosing
-which combination of potential and initial state you would like, press Reset and Run/Pause to run the simulator.  If you would 
-like to download the data of the simulation, you can also do that by pressing the Download button. 
+which combination of potential and initial state you would like, press Reset and Run/Pause to run the simulator.  If you would
+like to download the data of the simulation, you can also do that by pressing the Download button.
 </p>
 
 
 <p>
-What you see as the colours in the output above is a plot is the wavefunction.  The height of the wavefunction is the magnitude of the 
-wavefunction  \( | \psi (x) | \), and the colours correspond to the phase of the wavefunction \( arg( \psi(x) ) \).  The shape of the potential 
-\( V(x) \) is shown as the grey plot in the background.  
+What you see as the colours in the output above is a plot is the wavefunction.  The height of the wavefunction is the magnitude of the
+wavefunction  \( | \psi (x) | \), and the colours correspond to the phase of the wavefunction \( arg( \psi(x) ) \).  The shape of the potential
+\( V(x) \) is shown as the grey plot in the background.
 </p>
 
 <p>
-The spatial region of the solver is actually limited to the region that that you see, and is in the range of \( 0< x < 1 \).  At \(x = 0\) 
-and \( x = 1 \) there is a hard wall (infinite potential) so that the wavefunction cannot go outside this region.  This is why if you 
-choose "Infinite square well" you just see a flat potential.  It's because the edges of the simulation are actually the infinite potential walls.  
+The spatial region of the solver is actually limited to the region that that you see, and is in the range of \( 0< x < 1 \).  At \(x = 0\)
+and \( x = 1 \) there is a hard wall (infinite potential) so that the wavefunction cannot go outside this region.  This is why if you
+choose "Infinite square well" you just see a flat potential.  It's because the edges of the simulation are actually the infinite potential walls.
 </p>
 
 <p> In addition to the wavefunction output, the code also outputs a few other quantities.  In the position space output we have
 </p>
 
 <p>
-<ul> <li> \( P(x < .5 ) = \int_0^{1/2} | \psi(x) |^2  \) is probability that the particle is in the left half of the simulated region. 
-<li> \( \langle x \rangle  =  \int_0^{1} x | \psi(x) |^2 \) is the average position.  
-<li> \( RMS(x)  = \sqrt{\int_0^{1} x^2 | \psi(x) |^2 }  \) is the root mean square position.  
-<li> \( t \) is the current time.  
+<ul> <li> \( P(x < .5 ) = \int_0^{1/2} | \psi(x) |^2  \) is probability that the particle is in the left half of the simulated region.
+<li> \( \langle x \rangle  =  \int_0^{1} x | \psi(x) |^2 \) is the average position.
+<li> \( RMS(x)  = \sqrt{\int_0^{1} x^2 | \psi(x) |^2 }  \) is the root mean square position.
+<li> \( t \) is the current time.
 </ul>
 </p>
 
-<p> In the momentum space region, the Fourier transform of the wavefunction is plotted.  This is </p> 
+<p> In the momentum space region, the Fourier transform of the wavefunction is plotted.  This is </p>
 
 <p> \( \psi(p) = \int \psi(x) e^{i px} dx \) </p>
 
@@ -173,7 +173,7 @@ choose "Infinite square well" you just see a flat potential.  It's because the e
 This tells you what frequencies (or momenta) the wavefunction is made of.  Again, some basic parameters: </p>
 
 <p>
-<ul> <li> \( P(p < .5 ) = \int_{-\infty}^{0} | \psi(p) |^2  \) is probability that the particle is moving towards the left. 
+<ul> <li> \( P(p < .5 ) = \int_{-\infty}^{0} | \psi(p) |^2  \) is probability that the particle is moving towards the left.
 <li> \( \langle p \rangle  =  \int_{-\infty}^\infty p | \psi(p) |^2 \) is the average momentum.
 <li> \( RMS(p)  = \sqrt{\int_{-\infty}^\infty p^2 | \psi(p) |^2 }  \) is the root mean square momentum.
 </ul>
@@ -182,15 +182,15 @@ This tells you what frequencies (or momenta) the wavefunction is made of.  Again
 The definitions of the potentials are as follows.
 
 <p>
-<ul> <li> Harmonic: \( V(x) = \frac{1}{2} x^2  \) 
-<li> Double well: \( V(x) = ?????????????  \) 
-<li> Infinite square well: \( V(x) = 0 \) for \( 0 < x < 1 \).  
-<li> Barrier:  \( V(x) = V_0 \) for \( ? < x < ? \); \(V(x) =0 \) otherwise.  \( V_0 \) set by slider.  
-<li> Step: \( V(x) = V_0 \) for \( x > 1/2 \); \(V(x) =0 \) for \( x < 1/2 \).  \( V_0 \) set by slider.  
+<ul> <li> Harmonic: \( V(x) = \frac{1}{2} x^2  \)
+<li> Double well: \( V(x) = ((x-x_0)(x+x_0))^2\). The value \(x_0\) represents the center of the double well potential.
+<li> Infinite square well: \( V(x) = 0 \) for \( 0 < x < 1 \).
+<li> Barrier:  \( V(x) = V_0 \) for \( x_0-a < x < x_0+a \); \(V(x) =0 \) otherwise.  \( V_0 \) set by slider. The value \(a = 0.1\) represents the width of the barrier.
+<li> Step: \( V(x) = V_0 \) for \( x > 1/2 \); \(V(x) =0 \) for \( x < 1/2 \).  \( V_0 \) set by slider.
 </ul>
 </p>
 
-Keep in mind that \(V(x) = \infty \) for any region outside of \( 0 < x < 1 \). 
+Keep in mind that \(V(x) = \infty \) for any region outside of \( 0 < x < 1 \).
 
 
 <h3> Things to try </h3>
@@ -198,16 +198,16 @@ Keep in mind that \(V(x) = \infty \) for any region outside of \( 0 < x < 1 \).
 <h4> 1. Eigenstates </h3>
 
 <p>
-First start by initializing the wavefunction as a Gaussian pulse and choosing the harmonic .  When you press run, what you 
-should see is that the wavefunction starts to move around, and after some time it becomes extremely messy.  At \(x = 0, 1 \) there are 
+First start by initializing the wavefunction as a Gaussian pulse and choosing the harmonic .  When you press run, what you
+should see is that the wavefunction starts to move around, and after some time it becomes extremely messy.  At \(x = 0, 1 \) there are
 hard walls (infinite potentials) so that the wavefunction will always bounce off these, which will produce a rather chaotic distribution
-of states. Try this with a few different Gaussian pulse parameters and see if adjusting the parameters makes any difference.  
+of states. Try this with a few different Gaussian pulse parameters and see if adjusting the parameters makes any difference.
 </p>
 
 <p>
-Now change the initial state to the Harmonic ground state and run the simulator.  Try this also with the harmonic first excited state. 
-What you see is that the wavefunction is completely 
-unchanging in shape, and only the colours change with time.  This is because this is an eigenstate of the Hamiltonian.  The colours 
+Now change the initial state to the Harmonic ground state and run the simulator.  Try this also with the harmonic first excited state.
+What you see is that the wavefunction is completely
+unchanging in shape, and only the colours change with time.  This is because this is an eigenstate of the Hamiltonian.  The colours
 change with time because the effect of the Schrodinger equation is to only apply a phase to the state.
 </p>
 
@@ -216,12 +216,12 @@ change with time because the effect of the Schrodinger equation is to only apply
 </p>
 
 <p>
-The argument of the state is just \( E_n t \) which changes over time. 
+The argument of the state is just \( E_n t \) which changes over time.
 </p>
 
 <p>
-You can see from this example that eigenstate are very special states and are actually quite rare, even though this is the first thing that you 
-tend to learn in a quantum mechanics course.  A typical state turns into a messy jumble of states. 
+You can see from this example that eigenstate are very special states and are actually quite rare, even though this is the first thing that you
+tend to learn in a quantum mechanics course.  A typical state turns into a messy jumble of states.
 
 
 
@@ -230,8 +230,8 @@ tend to learn in a quantum mechanics course.  A typical state turns into a messy
 <h4> 2. Gaussian wavepacket </h3>
 
 <p>
-This time make the potential an inifite well and the initial state a Gaussian pulse again.  Adjust the parameters so that you make a Gaussian 
-wavepacket.  Observe the diffusion of the wavepacket, where it spreads out as it moves.  
+This time make the potential an inifite well and the initial state a Gaussian pulse again.  Adjust the parameters so that you make a Gaussian
+wavepacket.  Observe the diffusion of the wavepacket, where it spreads out as it moves.
 </p>
 
 
@@ -240,9 +240,9 @@ wavepacket.  Observe the diffusion of the wavepacket, where it spreads out as it
 <h4> 3. Barriers and steps </h3>
 
 <p>
-This time make the potential a barrier and the initial state a Gaussian pulse again.  Adjust the parameters so that you send a Gaussian 
+This time make the potential a barrier and the initial state a Gaussian pulse again.  Adjust the parameters so that you send a Gaussian
 pulse towards the barrier, as if you are lauching a particle at a wall.  Play with the parameters to see when you can penetrate the barrier
-and observe quantum tunneling.  
+and observe quantum tunneling.
 </p>
 
 
