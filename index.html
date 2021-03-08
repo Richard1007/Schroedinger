@@ -1,13 +1,91 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 	<head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DE1R8K6KH4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DE1R8K6KH4');
+</script>
+
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+	</head>
+	<body>
+
+<h1> The Time Dependent Schrodinger Equation </h1>
+
+
+<h3> Introduction </h3>
+
+<p>
+The time dependent Schrodinger equation is perhaps the most fundamental equation in quantum mechanics.  This page is designed so that 
+you get a feel for how it works. 
+</p>
+
+<p>
+First let's write down the equation in one dimension:
+</p>
+
+<h1>
+\( i \hbar \frac{d \psi}{dt} = - \frac{\hbar^2}{2m} \frac{d^2 \psi}{dx^2} + V(x) \psi(x) \)
+</h1>
+
+<p>
+Here, the variables are:
+</p>
+
+<p>
+<ul> <li> \( \psi(x) \) is the quantum wavefunction
+<li> \( \hbar = h/2 \pi \) is Planck's constant divided by \( 2 \pi \)
+<li> \( h \) is Planck's constant \( = 6.3 \times 10^{-34} \) Js
+<li> \( t \) is time
+<li> \( m \) is the mass of the particle
+<li> \( x \) is space
+<li> \( V(x) \) is the potential energy
+</ul>
+
+
+
+
+<p>
+What the Schrodinger equation does is to take the wavefunction  \( \psi(x) \) at some initial time (let's say \(t=0\) ) and
+evolve it forward in time.  By solving the Schrodinger equation, you are able to find what the wavefunction will be at some other time
+\( t \) later. 
+</p>
+
+<p>
+The "inputs" of the Schrodinger function are the potential energy \( V(x) \), the mass of the particle \( m \), and the initial wavefunction 
+\( \psi(x) \).  From just this information, the Schrodinger equation can predict how the wavefunction will change over time.  
+</p>
+
+<p>
+Schrodinger equation is the most central equation of quantum mechanics and is used to understand any kind of time-dependent quantum phenomenon.  
+It's status in quantum physics is a lot like Newton's laws of motion for classical physics.  From this equation we can work out how things will behave over time. 
+</p>
+
+
+
+<p>
+The best way to understand this is to get your hands dirty and play with the equation, which you can do below:
+</p>
+
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.2.0/p5.js"></script>
 		<script src="complex.js"></script>
 		<script src="fourier.js"></script>
 		<script src="schroedinger.js"></script>
 		<script src="sketch.js"></script>
-		<title>Schroedinger Equation</title>
+		<title>Schrodinger Equation</title>
 		<meta charset="utf-8">
 		<style>
 			.field {
@@ -17,8 +95,8 @@
 				width: 400px;
 			}
 		</style>
-	</head>
-	<body>
+
+
 		<div id='container'></div>
 		<div id='gui'>
 			<fieldset class='field'>
@@ -49,16 +127,148 @@
 				<div id="container_download"></div>
 			</fieldset>
 		</div>
-		<p>Original version implemented by CodingPhysics. Adapted by Marek Narożniak and Professor Tim Byrnes.</p>
+
+
+<h3> The Schrodinger equation simulator </h3>
+
+<p>
+The above code does a numerical evolution of the time-dependent Schrodinger equation in one dimension.  
+</p>
+
+<p>
+There are various combinations of the potential \(V(x) \) and initial state \( \psi(x) \) that you can choose. After choosing
+which combination of potential and initial state you would like, press Reset and Run/Pause to run the simulator.  If you would 
+like to download the data of the simulation, you can also do that by pressing the Download button. 
+</p>
+
+
+<p>
+What you see as the colours in the output above is a plot is the wavefunction.  The height of the wavefunction is the magnitude of the 
+wavefunction  \( | \psi (x) | \), and the colours correspond to the phase of the wavefunction \( arg( \psi(x) ) \).  The shape of the potential 
+\( V(x) \) is shown as the grey plot in the background.  
+</p>
+
+<p>
+The spatial region of the solver is actually limited to the region that that you see, and is in the range of \( 0< x < 1 \).  At \(x = 0\) 
+and \( x = 1 \) there is a hard wall (infinite potential) so that the wavefunction cannot go outside this region.  This is why if you 
+choose "Infinite square well" you just see a flat potential.  It's because the edges of the simulation are actually the infinite potential walls.  
+</p>
+
+<p> In addition to the wavefunction output, the code also outputs a few other quantities.  In the position space output we have
+</p>
+
+<p>
+<ul> <li> \( P(x < .5 ) = \int_0^{1/2} | \psi(x) |^2  \) is probability that the particle is in the left half of the simulated region. 
+<li> \( \langle x \rangle  =  \int_0^{1} x | \psi(x) |^2 \) is the average position.  
+<li> \( RMS(x)  = \sqrt{\int_0^{1} x^2 | \psi(x) |^2 }  \) is the root mean square position.  
+<li> \( t \) is the current time.  
+</ul>
+</p>
+
+<p> In the momentum space region, the Fourier transform of the wavefunction is plotted.  This is </p> 
+
+<p> \( \psi(p) = \int \psi(x) e^{i px} dx \) </p>
+
+<p>
+This tells you what frequencies (or momenta) the wavefunction is made of.  Again, some basic parameters: </p>
+
+<p>
+<ul> <li> \( P(p < .5 ) = \int_{-\infty}^{0} | \psi(p) |^2  \) is probability that the particle is moving towards the left. 
+<li> \( \langle p \rangle  =  \int_{-\infty}^\infty p | \psi(p) |^2 \) is the average momentum.
+<li> \( RMS(p)  = \sqrt{\int_{-\infty}^\infty p^2 | \psi(p) |^2 }  \) is the root mean square momentum.
+</ul>
+</p>
+
+The definitions of the potentials are as follows.
+
+<p>
+<ul> <li> Harmonic: \( V(x) = \frac{1}{2} x^2  \) 
+<li> Double well: \( V(x) = ?????????????  \) 
+<li> Infinite square well: \( V(x) = 0 \) for \( 0 < x < 1 \).  
+<li> Barrier:  \( V(x) = V_0 \) for \( ? < x < ? \); \(V(x) =0 \) otherwise.  \( V_0 \) set by slider.  
+<li> Step: \( V(x) = V_0 \) for \( x > 1/2 \); \(V(x) =0 \) for \( x < 1/2 \).  \( V_0 \) set by slider.  
+</ul>
+</p>
+
+Keep in mind that \(V(x) = \infty \) for any region outside of \( 0 < x < 1 \). 
+
+
+<h3> Things to try </h3>
+
+<h4> 1. Eigenstates </h3>
+
+<p>
+First start by initializing the wavefunction as a Gaussian pulse and choosing the harmonic .  When you press run, what you 
+should see is that the wavefunction starts to move around, and after some time it becomes extremely messy.  At \(x = 0, 1 \) there are 
+hard walls (infinite potentials) so that the wavefunction will always bounce off these, which will produce a rather chaotic distribution
+of states. Try this with a few different Gaussian pulse parameters and see if adjusting the parameters makes any difference.  
+</p>
+
+<p>
+Now change the initial state to the Harmonic ground state and run the simulator.  Try this also with the harmonic first excited state. 
+What you see is that the wavefunction is completely 
+unchanging in shape, and only the colours change with time.  This is because this is an eigenstate of the Hamiltonian.  The colours 
+change with time because the effect of the Schrodinger equation is to only apply a phase to the state.
+</p>
+
+<p>
+\( \psi(x,t) = e^{-i E_n t } \psi(x) \)
+</p>
+
+<p>
+The argument of the state is just \( E_n t \) which changes over time. 
+</p>
+
+<p>
+You can see from this example that eigenstate are very special states and are actually quite rare, even though this is the first thing that you 
+tend to learn in a quantum mechanics course.  A typical state turns into a messy jumble of states. 
+
+
+
+
+
+<h4> 2. Gaussian wavepacket </h3>
+
+<p>
+This time make the potential an inifite well and the initial state a Gaussian pulse again.  Adjust the parameters so that you make a Gaussian 
+wavepacket.  Observe the diffusion of the wavepacket, where it spreads out as it moves.  
+</p>
+
+
+
+
+<h4> 3. Barriers and steps </h3>
+
+<p>
+This time make the potential a barrier and the initial state a Gaussian pulse again.  Adjust the parameters so that you send a Gaussian 
+pulse towards the barrier, as if you are lauching a particle at a wall.  Play with the parameters to see when you can penetrate the barrier
+and observe quantum tunneling.  
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3> Credits </h3>
+
+		<p>Original version implemented by CodingPhysics. Adapted by Marek Narożniak and Tim Byrnes.</p>
 		<dl>
 			<dt>CodingPhysics</dt>
 			<dd>The author of the original implementation of the above simulation. Visit the GitHub profile under <a href="https://github.com/CodingPhysics">github.com/CodingPhysics</a></dd>
 
-			<dt>Tim Byrnes</dt>
-			<dd>Professor at New York University Shanghai. Visit <a href="https://nyu.timbyrnes.net/">nyu.timbyrnes.net</a> to know more!</dd>
-
 			<dt>Marek Narożniak</dt>
-			<dd>PhD Student at Tim Byrnes research group. Visit the <a href="https://mareknarozniak.com/">mareknarozniak.com</a> to know of other Marek's projects!</dd>
+			<dd>Visit <a href="https://mareknarozniak.com/">mareknarozniak.com</a> to know of other Marek's projects!</dd>
+
+			<dt>Tim Byrnes</dt>
+			<dd>Visit <a href="https://nyu.timbyrnes.net/">nyu.timbyrnes.net</a> to know more!</dd>
+
 	</dl>
 	<p>Visit this project on <a href="https://github.com/marekyggdrasil/Schroedinger">GitHub</a> and contribute!</p>
 	</body>
