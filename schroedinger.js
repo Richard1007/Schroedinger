@@ -295,6 +295,7 @@ function Schroedinger(settings){
 		let heightP    = height - 2*topMargin - heightX - 2;
 
 		this.drawUnderlay(seperator,heightX - 2*topMargin, 2*topMargin);
+		console.log(this.psiX, this.plotX, heightX, topMargin, this.scaleFactor)
 		this.plotComplexData(this.psiX, this.plotX, heightX, topMargin, this.scaleFactor);
 		this.plotComplexData(this.psiP, this.plotP, heightP, height - heightP, 1/this.maxFourierAmp);
 		this.drawOverlay(seperator, textHeight);

@@ -1,0 +1,84 @@
+.div-block {
+  position: relative;
+  height: 100vh;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.columns {
+  position: relative;
+  height: 100vh;
+}
+
+.potential-wrapper {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.div-block-2 {
+  position: relative;
+  width: 900px;
+  height: 500px;
+  background-color: #32909b;
+}
+
+.div-block-3 {
+  height: 10px;
+}
+
+.w-col-8{
+  position: fixed;
+  width: 64vw;
+}
+
+.w-col-4{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 33vw;
+}
+
+.control-button-wrapper {
+  width:100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+}
+
+.button {
+  height: 28px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.button-wrapper{
+  display: inline-block;
+}
+
+.value-style{
+  display: inline-block;
+}
+
+input{
+  margin-left: 2px;
+  margin-right: 5px;
+}
+
+label{
+  display:inline-block;
+  width:80%;
+}
+
+.MathJax{
+  font-size: 14px;
+}

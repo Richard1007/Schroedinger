@@ -1,7 +1,7 @@
 // Display options:
 
-const CANVAS_WIDTH  = 900//1920;
-const CANVAS_HEIGHT = 600//1080;
+let CANVAS_WIDTH  = 800//1920;
+let CANVAS_HEIGHT = 500//1080;
 const FRAME_RATE    = 20;
 
 let settings = {
@@ -70,6 +70,9 @@ let sigma;
 
 function setup() {
 	frameRate(FRAME_RATE);
+	CANVAS_WIDTH = floor(windowWidth*0.66) -60;
+	CANVAS_HEIGHT = floor(windowHeight * 0.6) - 20;
+
 	const cnvs = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 	cnvs.parent('container');
 	settings.underlay = createGraphics(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -77,6 +80,7 @@ function setup() {
 	input_potential = createInput('100000*Math.pow(2*x-1.0,2) ');
 	input_potential.parent('container_potential_parameters_customized');
 	input_potential.attribute('disabled', '');
+
 	radio_potential = createRadio('potential');
 	radio_potential.option('harmonic', 'Harmonic');
 	const pot_dbl = radio_potential.option('double_well', 'Double well');
@@ -85,6 +89,10 @@ function setup() {
 	radio_potential.option('barrier', 'Barrier');
 	radio_potential.option('step', 'Step');
 	radio_potential.option('custom', 'Customized');
+	radio_potential.style('width', '100px');
+	
+	// radio_potential.style('display', 'inline-block');
+
 	radio_potential.changed(potentialSelectEvent);
 	radio_potential.parent('container_potentials');
 	slider_height = createSlider(0, 255, 127);
@@ -198,6 +206,7 @@ function potentialSelectEvent() {
 		potential_height = slider_height.value()/255;
 		slider_height.removeAttribute('disabled');
 		input_potential.attribute('disabled', '');
+		
 	} else if (val == 'custom') {
 		slider_height.attribute('disabled', '');
 		input_potential.removeAttribute('disabled');
@@ -205,6 +214,8 @@ function potentialSelectEvent() {
 		slider_height.attribute('disabled', '');
 		input_potential.attribute('disabled', '');
 	}
+	input_potential.style('width', '188px');
+
 }
 
 function psiSelectEvent() {
@@ -240,6 +251,7 @@ function psiSelectEvent() {
 			settings.gaussian = false;
 			psi_func = x => eval(input_psi.value());
 			break;
+			
 	}
 	// handle the UI
 	if (val == 'inf_nth') {
@@ -270,6 +282,8 @@ function psiSelectEvent() {
 		slider_variance.attribute('disabled', '');
 		input_psi.attribute('disabled', '');
 	}
+	// input_potential.style('width', '200px');
+	
 }
 
 function sliderUpdateEvent() {
@@ -292,4 +306,12 @@ function downloadDataEvent() {
 function downloadCanvasEvent() {
 	saveTable(quantumParticle.dataTable, quantumParticle.dataFile + 'Statictics.csv');
 	console.log('-> Statictics data saved as ' + this.dataFile + 'Statictics.csv');
+}
+
+function windowResized(){
+	
+	CANVAS_WIDTH = floor(windowWidth*0.66) -60;
+	CANVAS_HEIGHT = floor(windowHeight * 0.6) - 20;
+	resizeCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+	resetSketch();
 }
